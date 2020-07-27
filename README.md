@@ -1,1 +1,1 @@
-SLAM notes
+SLAM notes for blogs
