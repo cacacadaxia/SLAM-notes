@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "utils.h"
 #include "Viodometer.h"
+#include "vio.h"
 int main(){
     cout<<"fuck you"<<endl;
 
@@ -21,18 +22,19 @@ int main(){
     std::vector<double> TimeStamps;
     Utils::LoadImages(location + "associate.txt", ImageFilenamesRGB, ImageFilenamesD, TimeStamps);
 
-
     //循环
     Viodometer::Ptr viodometer(new Viodometer);
+    slambook::VisualOdometry::Ptr tmp(new slambook::VisualOdometry);
+    Camera::Ptr camera(new Camera);
     for (int i = 0; i < ImageFilenamesRGB.size(); ++i) {
         cv::Mat rgb = cv::imread(location + ImageFilenamesRGB[i]);
         cv::Mat dep = cv::imread(location + ImageFilenamesD[i]);
         Frame::Ptr frame = Frame::CreatePtr(i);
         frame->color = rgb;
         frame->depth = dep;
-        frame->ID_ = i;
-        cout<<"fuck"<<endl;
-        viodometer->addFrame(frame);
+        frame->camera_ = camera;
+        viodometer->addFrame( frame);
+//        tmp->addFrame(frame);
 
 
         if (i==0) cout<<frame->Twc_<<endl;

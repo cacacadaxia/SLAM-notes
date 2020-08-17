@@ -12,7 +12,7 @@ using namespace Sophus;
 class Camera{
 public:
     typedef shared_ptr<Camera> Ptr;
-    double fx_, fy_, cx_, cy_, scale;
+    double fx_, fy_, cx_, cy_, depth_scale_;
     cv::Mat K_;
 public:
     Camera(){
@@ -20,7 +20,7 @@ public:
         fy_ = Config::get<double>("camera.fy");
         cx_ = Config::get<double>("camera.cx");
         cy_ = Config::get<double>("camera.cy");
-        scale = Config::get<double>("camera.depth_scale");
+        depth_scale_ = Config::get<double>("camera.depth_scale");
         K_ = (cv::Mat_<double>(3, 3) << fx_, 0, cx_, 0, fy_, cy_, 0, 0, 1);
     }
 

@@ -27,10 +27,6 @@ int main(){
     Camera::Ptr camera_ = shared_ptr<Camera>(new Camera);
     Eigen::Vector3d tmp = camera_->pixel2camera(Eigen::Vector2d(1, 2), 3);
 
-
-
-
-
     int a = 100;
     int d = 200;
     int *b, *c;

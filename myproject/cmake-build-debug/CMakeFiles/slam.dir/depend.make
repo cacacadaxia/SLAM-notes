@@ -8,6 +8,7 @@ CMakeFiles/slam.dir/slam_main.cpp.o: ../Frame.h
 CMakeFiles/slam.dir/slam_main.cpp.o: ../Viodometer.h
 CMakeFiles/slam.dir/slam_main.cpp.o: ../slam_main.cpp
 CMakeFiles/slam.dir/slam_main.cpp.o: ../utils.h
+CMakeFiles/slam.dir/slam_main.cpp.o: ../vio.h
 CMakeFiles/slam.dir/slam_main.cpp.o: /home/cacacadaxia/Desktop/packageFromGithub/slambook\ 2/3rdparty/Sophus/sophus/se3.h
 CMakeFiles/slam.dir/slam_main.cpp.o: /home/cacacadaxia/Desktop/packageFromGithub/slambook\ 2/3rdparty/Sophus/sophus/so3.h
 CMakeFiles/slam.dir/slam_main.cpp.o: /usr/include/eigen3/Eigen/Cholesky
