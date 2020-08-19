@@ -123,7 +123,6 @@ namespace slambook{
     void VisualOdometry::computeDescriptors()
     {
         orb_->compute ( curr_->color, keypoints_curr_, descriptors_curr_ );
-//        cout<<"descriptors_curr_ is "<<descriptors_curr_.rows<<endl;
     }
 
     void VisualOdometry::featureMatching()
@@ -192,9 +191,12 @@ namespace slambook{
                 0,0,1
         );/*相机内参*/
         Mat rvec, tvec, inliers;
-        cv::solvePnPRansac( pts3d, pts2d, K, Mat(), rvec, tvec, false, 100, 4.0, 0.99, inliers );
+        cv::solvePnPRansac( pts3d, pts2d, K, Mat(), rvec, tvec,
+                false, 100,
+                4.0, 0.99, inliers );
         num_inliers_ = inliers.rows; /*特征点数量？*/
-//        // cout<<"pnp inliers: "<<num_inliers_<<endl;
+
+         cout<<"pnp inliers: "<<num_inliers_<<endl;
 //        T_c_r_estimated_ = SE3(
 //                SO3(rvec.at<double>(0,0), rvec.at<double>(1,0), rvec.at<double>(2,0)),
 //                Vector3d( tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0))

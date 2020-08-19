@@ -10,6 +10,8 @@
 #include "opencv2/features2d.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
+
+//#define DEBUG
 using namespace Sophus;
 class Viodometer{
 public:
@@ -58,7 +60,6 @@ public:
                 ComputeDes();
                 featureMatching();
                 solvePNPFunc();
-//                cout<<"point"<<endl;
 
 
                 cur_frame_->Twc_ = last_frame_->Twc_ * T_c_l_.inverse();
@@ -92,7 +93,7 @@ public:
         point3d_ref_.clear();
         descriptor_last_ = Mat();
         for (int i = 0; i < KeyP_cur_.size(); ++i) {
-            double true_d = cur_frame_->findDepth(KeyP_cur_[i]);
+            double true_d = last_frame_->findDepth(KeyP_cur_[i]);
             if (true_d > 0) {
                 /*注意这里是需要转移到相机坐标系中去的*/
                 Vector3d tmp = camera_->pixel2camera(
@@ -128,19 +129,23 @@ public:
             point3d_1.push_back(point3d_ref_[m.queryIdx]);
             point2d_2.push_back(KeyP_cur_[m.queryIdx].pt);
         }
+#ifdef DEBUG
         cv::Mat tmp_match_pic;
         cv::drawMatches(last_frame_->color, last_frame_->kp_tmp, cur_frame_->color, KeyP_cur_, matches_, tmp_match_pic);
         cv::imshow("匹配的特征点",tmp_match_pic);
         cv::waitKey(0);
-
-
+#endif
         cv::Mat r, t, inliers;
         std::cout<<point2d_2.size()<<std::endl;
-        cv::solvePnPRansac(point3d_1, point2d_2, camera_->K_, Mat(), r, t, false, 100, 4.0, 0.99, inliers);
+        cv::solvePnPRansac(point3d_1, point2d_2,
+                camera_->K_, Mat(), r, t,
+                false, 100, 4.0,
+                0.99, inliers);
         T_c_l_ = SE3(
                 SO3(r.at<double>(0, 0), r.at<double>(1, 0), r.at<double>(2, 0)),
                 Vector3d(t.at<double>(0, 0), t.at<double>(1, 0), t.at<double>(2, 0))
         );
+        cout<<t<<endl;
         cout<<inliers.rows<<endl;
     }
 

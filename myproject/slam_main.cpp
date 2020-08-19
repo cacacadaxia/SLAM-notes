@@ -2,9 +2,6 @@
 // Created by cacacadaxia on 2020/8/13.
 //
 
-
-
-
 #include "Common.h"
 #include "Config.h"
 #include "Frame.h"
@@ -34,9 +31,8 @@ int main(){
         frame->color = rgb;
         frame->depth = dep;
         frame->camera_ = camera;
-        viodometer->addFrame2( frame);
-//        tmp->addFrame(frame);
-
+//        viodometer->addFrame2( frame);
+        tmp->addFrame(frame);
 
         if (i==0) cout<<frame->Twc_<<endl;
     }
