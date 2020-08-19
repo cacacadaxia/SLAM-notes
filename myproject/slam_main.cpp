@@ -29,11 +29,12 @@ int main(){
     for (int i = 0; i < ImageFilenamesRGB.size(); ++i) {
         cv::Mat rgb = cv::imread(location + ImageFilenamesRGB[i]);
         cv::Mat dep = cv::imread(location + ImageFilenamesD[i]);
+
         Frame::Ptr frame = Frame::CreatePtr(i);
         frame->color = rgb;
         frame->depth = dep;
         frame->camera_ = camera;
-        viodometer->addFrame( frame);
+        viodometer->addFrame2( frame);
 //        tmp->addFrame(frame);
 
 

@@ -1,45 +1,29 @@
-//
-// Created by cacacadaxia on 2020/8/11.
-//
 
-#include "Common.h"
+// mutex example
+#include <iostream>       // std::cout
+#include <thread>         // std::thread
+#include <mutex>          // std::mutex
 
-#include "Config.h"
-#include "Camera.h"
-//#include "Viodometer.h"
+std::mutex mtx;           // mutex for critical section
+#include "unistd.h"
+void print_block(int n, char c) {
+    // critical section (exclusive access to std::cout signaled by locking mtx):
+    mtx.lock();
+    for (int i = 0; i<n; ++i) {
+        std::cout << c;
+        sleep(0.1);
+    }
+    std::cout << '\n';
+    mtx.unlock();
 
-enum VOstate{
-    INI = -1,
-    OK = 0,
-    LOST
-};
-int main(){
+}
 
-    std::string file_name = "default.yaml";
-    cv::FileStorage file_yaml = cv::FileStorage(file_name.c_str(),cv::FileStorage::READ);
-    double fx = double(file_yaml["camera.fx"]);
-    cout<<fx<<endl;
+int main() {
+    std::thread th1(print_block, 500, '*');
+    std::thread th2(print_block, 500, '$');
 
-    Config::setParament(file_name);
-    double fy = Config::get<double>("camera.fy");
-    cout<<fy<<endl;
+    th1.join();
+    th2.join();
 
-    Camera::Ptr camera_ = shared_ptr<Camera>(new Camera);
-    Eigen::Vector3d tmp = camera_->pixel2camera(Eigen::Vector2d(1, 2), 3);
-
-    int a = 100;
-    int d = 200;
-    int *b, *c;
-    b = &a;
-    c = &a;
-    *c = 10;
-    cout<<a<<endl;
-    *b = 20;
-    cout<<a<<endl;
-    c = &d;
-    a = 2000;
-    cout<<*c<<endl;
-
-
-
+    return 0;
 }

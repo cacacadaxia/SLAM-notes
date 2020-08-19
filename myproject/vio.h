@@ -148,14 +148,6 @@ namespace slambook{
                 feature_matches_.push_back(m);
             }
         }
-//         cout<<"good matches: "<<feature_matches_.size()<<endl;//匹配了多少个？
-        /*注意这里的keypoints，他的维度是500，与match的维度不一致的*/
-//        cv::Mat tmp_match_pic;
-//        cv::drawMatches(img1, keyPoints1, img2, , matchs, tmp_match_pic);
-//        cv::imshow("匹配的特征点", tmp_match_pic);
-//        cv::waitKey(0);
-
-
 
 
     }

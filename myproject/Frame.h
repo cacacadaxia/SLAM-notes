@@ -18,6 +18,7 @@ public:
     cv::Mat color;
     int ID_;
     Sophus::SE3 Twc_;//这就是初始状态
+    vector<KeyPoint> kp_tmp;
 public:
     Frame(const int & id):camera_(nullptr),ID_(id){
 
@@ -26,8 +27,6 @@ public:
     static Ptr CreatePtr(const int& id){
         return shared_ptr<Frame>(new Frame(id));
     }
-
-
     double findDepth(const cv::KeyPoint &kp){
         int x = cvRound(kp.pt.x);
         int y = cvRound(kp.pt.y);
@@ -39,6 +38,7 @@ public:
         else
         {
             // check the nearby points
+            //选择不为0的深度值
             int dx[4] = {-1,0,1,0};
             int dy[4] = {0,-1,0,1};
             for ( int i=0; i<4; i++ )
